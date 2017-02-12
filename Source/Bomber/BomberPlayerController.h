@@ -11,6 +11,7 @@ class ABomberPlayerController : public APlayerController
 
 public:
 	ABomberPlayerController();
+	
 
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */

@@ -14,6 +14,7 @@ ABomberPlayerController::ABomberPlayerController()
 	
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Crosshairs;
+	
 }
 
 void ABomberPlayerController::PlayerTick(float DeltaTime)
@@ -58,6 +59,7 @@ void ABomberPlayerController::MoveForward(float Value)
 		FRotator Rotation = sup->Controller->GetControlRotation();
 		const FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
 		sup->AddMovementInput(Direction, Value);
+		
 	}
 }
 

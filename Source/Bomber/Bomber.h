@@ -3,7 +3,7 @@
 #ifndef __BOMBER_H__
 #define __BOMBER_H__
 
-#include "EngineMinimal.h"
+#include "Engine.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogBomber, Log, All);
 

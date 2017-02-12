@@ -8,7 +8,7 @@
 ABomberGameMode::ABomberGameMode()
 {
 	// use our custom PlayerController class
-	PlayerControllerClass = ABomberPlayerController::StaticClass();
+	/*PlayerControllerClass = ABomberPlayerController::StaticClass();*/
 	
 	// set default pawn class to our Blueprinted character
 	//static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDownCPP/Blueprints/TopDownCharacter"));
@@ -18,11 +18,11 @@ ABomberGameMode::ABomberGameMode()
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}*/
 
-	static ConstructorHelpers::FClassFinder<APawn> PawnClassAsset(TEXT("/Game/TopDownCPP/Blueprints/MyBomberCharacter"));
+	/*static ConstructorHelpers::FClassFinder<APawn> PawnClassAsset(TEXT("/Game/TopDownCPP/Blueprints/MyBomberCharacter"));
 	if (PawnClassAsset.Succeeded())
 	{
 		DefaultPawnClass = PawnClassAsset.Class;
-	}
+	}*/
 	
 	
 }
