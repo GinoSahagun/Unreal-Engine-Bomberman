@@ -2,34 +2,49 @@
 
 #include "Bomber.h"
 #include "EnemyCharacter.h"
+#include "EnemyAIController.h"
+#include "SBotWaypoint.h"
 
-
-// Sets default values
 AEnemyCharacter::AEnemyCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	/* Note: We assign the Controller class in the Blueprint extension of this class
+	Because the zombie AIController is a blueprint in content and it's better to avoid content references in code.  */
+	/*AIControllerClass = ASZombieAIController::StaticClass();*/
+	
 
+	/* Note: Visual Setup is done in the AI/ZombieCharacter Blueprint file */
+	BotType = EBotBehaviorType::Patrolling;
 }
 
-// Called when the game starts or when spawned
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
-// Called every frame
-void AEnemyCharacter::Tick( float DeltaTime )
+
+void AEnemyCharacter::Tick(float DeltaSeconds)
 {
-	Super::Tick( DeltaTime );
+	Super::Tick(DeltaSeconds);
 
 }
 
-// Called to bind functionality to input
-void AEnemyCharacter::SetupPlayerInputComponent(class UInputComponent* inputComponent)
+
+void AEnemyCharacter::SetBotType(EBotBehaviorType NewType)
 {
-	Super::SetupPlayerInputComponent(inputComponent);
+	BotType = NewType;
+
+	AEnemyAIController* AIController = Cast<AEnemyAIController>(GetController());
+	if (AIController)
+	{
+		AIController->SetBlackboardBotType(NewType);
+	}
 
 }
+
+
+
+
+
+
 

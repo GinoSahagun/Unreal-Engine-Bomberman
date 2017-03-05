@@ -49,6 +49,8 @@ public:
 	/** Initializes bomb count */
 	void InitBombCount();
 
+	bool IsAlive();
+
 	/** Updates the character's text to match with the updated stats */
 	//void UpdateCharText();
 	/**

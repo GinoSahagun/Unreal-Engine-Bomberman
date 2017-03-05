@@ -23,17 +23,17 @@ void UBTService_CheckForPlayer::TickNode(UBehaviorTreeComponent & OwnerComp, uin
 {
 	AEnemyAIController* controller = Cast<AEnemyAIController>(OwnerComp.GetAIOwner());
 
-	if (controller)
-	{
-		ABomberCharacter* Enemy = Cast<ABomberCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	//if (controller)
+	//{
+	//	ABomberCharacter* Enemy = Cast<ABomberCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-		if (Enemy)
-		{
-			OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Object>(controller->ENEMY_KEY_ID, Enemy);
-			//GEngine->AddOnScreenDebugMessage(-1, 2.f,FColor::Green, "Enemy Here");
+	//	if (Enemy)
+	//	{
+	//		OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Object>(controller->ENEMY_KEY_ID, Enemy);
+	//		//GEngine->AddOnScreenDebugMessage(-1, 2.f,FColor::Green, "Enemy Here");
 
 
-		}
-	
-	}
+	//	}
+	//
+	//}
 }

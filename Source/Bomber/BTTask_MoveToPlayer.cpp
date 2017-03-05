@@ -18,18 +18,18 @@ EBTNodeResult::Type UBTTask_MoveToPlayer::ExecuteTask(UBehaviorTreeComponent & O
 {
 	AEnemyAIController* AIController = Cast<AEnemyAIController>(OwnerComp.GetAIOwner());
 	
-	ABomberCharacter* Enemy = Cast<ABomberCharacter>(OwnerComp.GetBlackboardComponent()->GetValue<UBlackboardKeyType_Object>(AIController->ENEMY_KEY_ID));
+	//ABomberCharacter* Enemy = Cast<ABomberCharacter>(OwnerComp.GetBlackboardComponent()->GetValue<UBlackboardKeyType_Object>(AIController->ENEMY_KEY_ID));
 
-	if (Enemy)
-	{
-		AIController->MoveToActor(Enemy, 1.f, true, true, true, 0, true);
+	//if (Enemy)
+	//{
+	//	AIController->MoveToActor(Enemy, 1.f, true, true, true, 0, true);
 
-		return EBTNodeResult::Succeeded;
-	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "Not Working");
-		return EBTNodeResult::Failed;
-	}
+	//	return EBTNodeResult::Succeeded;
+	//}
+	//else
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "Not Working");
+	//	return EBTNodeResult::Failed;
+	//}
 	return EBTNodeResult::Failed;
 }

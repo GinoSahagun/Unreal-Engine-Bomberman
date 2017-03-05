@@ -115,6 +115,11 @@ void ABomberCharacter::InitBombCount()
 	//UpdateCharText();
 }
 
+bool ABomberCharacter::IsAlive()
+{
+	return true;
+}
+
 
 
 float ABomberCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)

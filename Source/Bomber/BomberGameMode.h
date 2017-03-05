@@ -10,6 +10,7 @@ class ABomberGameMode : public AGameMode
 
 public:
 	ABomberGameMode();
+
 };
 
 

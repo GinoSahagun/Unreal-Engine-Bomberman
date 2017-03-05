@@ -13,26 +13,99 @@
 
 AEnemyAIController::AEnemyAIController()
 {
-	blackBoardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("blackBoardComp"));
 
-	behaviorComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("behaviorComp"));
+	BehaviorComp = CreateDefaultSubobject<UBehaviorTreeComponent>(TEXT("behaviorComp"));
+	BlackboardComp = CreateDefaultSubobject<UBlackboardComponent>(TEXT("blackBoardComp"));
 
+	/* Match with the AI/ZombieBlackboard */
+	PatrolLocationKeyName = "PatrolLocation";
+	CurrentWaypointKeyName = "CurrentWayPoint";
+	BotTypeKeyName = "BotType";
+	TargetEnemyKeyName = "Target";
+
+	/* Initializes PlayerState so we can assign a team index to AI */
+	bWantsPlayerState = true;
 }
 
-void AEnemyAIController::Possess(APawn * InPawn)
+void  AEnemyAIController::Possess(APawn* InPawn)
 {
-
 	Super::Possess(InPawn);
 
-	AEnemyCharacter* AIChar = Cast<AEnemyCharacter>(InPawn);
-	
-	if (AIChar && AIChar->BotBehavior)
+	AEnemyCharacter* ZombieBot = Cast<AEnemyCharacter>(InPawn);
+	if (ZombieBot)
 	{
-		blackBoardComp->InitializeBlackboard(*AIChar->BotBehavior->BlackboardAsset);
+		if (ZombieBot->BehaviorTree->BlackboardAsset)
+		{
+			BlackboardComp->InitializeBlackboard(*ZombieBot->BehaviorTree->BlackboardAsset);
+			//set key ids
+			TargetEnemyKey = BlackboardComp->GetKeyID(TargetEnemyKeyName);
+			BotTypeKey = BlackboardComp->GetKeyID(BotTypeKeyName);
+			CurrentWaypointKey = BlackboardComp->GetKeyID(CurrentWaypointKeyName);
+			PatrolLocationKey = BlackboardComp->GetKeyID(PatrolLocationKeyName);
+			/* Make sure the Blackboard has the type of bot we possessed */
+			SetBlackboardBotType(ZombieBot->BotType);
+		}
 
-		ENEMY_KEY_ID = blackBoardComp->GetKeyID("Target");
+		BehaviorComp->StartTree(*ZombieBot->BehaviorTree);
+	}
+}
 
-		behaviorComp->StartTree(*AIChar->BotBehavior);
+
+void AEnemyAIController::UnPossess()
+{
+	Super::UnPossess();
+
+	/* Stop any behavior running as we no longer have a pawn to control */
+	BehaviorComp->StopTree();
+}
+
+
+void AEnemyAIController::SetWaypoint(ASBotWayPoint* NewWaypoint)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsObject(CurrentWaypointKeyName, NewWaypoint);
+	}
+}
+
+
+void AEnemyAIController::SetTargetEnemy(APawn* NewTarget)
+{
+
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValue<UBlackboardKeyType_Object>(TargetEnemyKey, NewTarget);
+		//BlackboardComp->SetValueAsObject(TargetEnemyKey, NewTarget);
+	}
+}
+
+
+ASBotWayPoint* AEnemyAIController::GetWaypoint()
+{
+	if (BlackboardComp)
+	{
+		return Cast<ASBotWayPoint>(BlackboardComp->GetValueAsObject(CurrentWaypointKeyName));
 	}
 
+	return nullptr;
+}
+
+
+ABomberCharacter* AEnemyAIController::GetTargetEnemy()
+{
+	if (BlackboardComp)
+	{
+		return Cast<ABomberCharacter>(BlackboardComp->GetValueAsObject(TargetEnemyKeyName));
+	}
+
+	return nullptr;
+}
+
+
+void AEnemyAIController::SetBlackboardBotType(EBotBehaviorType NewType)
+{
+	if (BlackboardComp)
+	{
+		BlackboardComp->SetValueAsEnum(BotTypeKeyName, (uint8) NewType);
+	}
 }
