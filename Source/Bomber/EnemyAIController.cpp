@@ -22,7 +22,7 @@ AEnemyAIController::AEnemyAIController()
 	CurrentWaypointKeyName = "CurrentWayPoint";
 	BotTypeKeyName = "BotType";
 	TargetEnemyKeyName = "Target";
-
+	TargetLocationKeyName = "TargetLocation";
 	/* Initializes PlayerState so we can assign a team index to AI */
 	bWantsPlayerState = true;
 }
@@ -42,6 +42,7 @@ void  AEnemyAIController::Possess(APawn* InPawn)
 			BotTypeKey = BlackboardComp->GetKeyID(BotTypeKeyName);
 			CurrentWaypointKey = BlackboardComp->GetKeyID(CurrentWaypointKeyName);
 			PatrolLocationKey = BlackboardComp->GetKeyID(PatrolLocationKeyName);
+			TargetLocationKey = BlackboardComp->GetKeyID(TargetLocationKeyName);
 			/* Make sure the Blackboard has the type of bot we possessed */
 			SetBlackboardBotType(ZombieBot->BotType);
 		}
@@ -75,6 +76,7 @@ void AEnemyAIController::SetTargetEnemy(APawn* NewTarget)
 	if (BlackboardComp)
 	{
 		BlackboardComp->SetValue<UBlackboardKeyType_Object>(TargetEnemyKey, NewTarget);
+		BlackboardComp->SetValue<UBlackboardKeyType_Vector>(TargetLocationKey, NewTarget->GetActorLocation());
 		//BlackboardComp->SetValueAsObject(TargetEnemyKey, NewTarget);
 	}
 }
@@ -108,4 +110,13 @@ void AEnemyAIController::SetBlackboardBotType(EBotBehaviorType NewType)
 	{
 		BlackboardComp->SetValueAsEnum(BotTypeKeyName, (uint8) NewType);
 	}
+}
+
+AActor* AEnemyAIController::GetSeeingPawn()
+{
+	//Return the seeing pawn
+	
+	UObject* object = BlackboardComp->GetValue<UBlackboardKeyType_Object>(TargetEnemyKey);
+
+	return object ? Cast<AActor>(object) : nullptr;
 }

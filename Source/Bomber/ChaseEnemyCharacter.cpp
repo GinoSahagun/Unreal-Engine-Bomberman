@@ -41,9 +41,10 @@ void AChaseEnemyCharacter::BeginPlay()
 }
 
 void AChaseEnemyCharacter::Tick(float DeltaSeconds)
-
 {
+
 	Super::Tick(DeltaSeconds);
+
 }
 
 void AChaseEnemyCharacter::OnSeePlayer(APawn* Pawn)
@@ -58,6 +59,7 @@ void AChaseEnemyCharacter::OnSeePlayer(APawn* Pawn)
 	if (AIController && SensedPawn->IsAlive())
 	{
 		AIController->SetTargetEnemy(SensedPawn);
+		
 	}
 }
 

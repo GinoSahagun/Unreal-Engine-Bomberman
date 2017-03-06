@@ -27,8 +27,7 @@ class BOMBER_API AEnemyAIController : public AAIController
 
 	UBlackboardComponent* BlackboardComp;
 
-	UPROPERTY(EditDefaultsOnly, Category = "AI")
-		FName TargetEnemyKeyName;
+	
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		FName PatrolLocationKeyName;
@@ -39,7 +38,8 @@ class BOMBER_API AEnemyAIController : public AAIController
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		FName BotTypeKeyName;
 
-
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName TargetLocationKeyName;
 
 
 public:
@@ -51,9 +51,16 @@ public:
 
 	void SetTargetEnemy(APawn* NewTarget);
 
+	
+
 	void SetBlackboardBotType(EBotBehaviorType NewType);
 
 	
+	AActor* GetSeeingPawn();
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+		FName TargetEnemyKeyName;
+
 		uint8 TargetEnemyKey;
 
 
@@ -64,6 +71,8 @@ public:
 
 
 		uint8 BotTypeKey;
+
+		uint8 TargetLocationKey;
 
 	/** Returns BehaviorComp subobject **/
 	FORCEINLINE UBehaviorTreeComponent* GetBehaviorComp() const { return BehaviorComp; }
